@@ -19,6 +19,7 @@ variable "load_balancer_inbound_nat_rules_ids" {
 variable "eviction_policy" {
   default = "Delete"
 }
+
 variable "priority" {
   default = "Spot"
 }

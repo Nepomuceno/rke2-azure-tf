@@ -8,7 +8,7 @@ variable "location" {
 }
 
 variable "cloud" {
-  type = string
+  type    = string
   default = "AzureUSGovernmentCloud"
   validation {
     condition     = contains(["AzureUSGovernmentCloud", "AzurePublicCloud"], var.cloud)
@@ -21,4 +21,24 @@ variable "service_principal" {
     client_id     = string
     client_secret = string
   })
+}
+
+variable "server_public_ip" {
+  type    = bool
+  default = false
+}
+
+variable "vm_size" {
+  type    = string
+  default = "Standard_D8_v3"
+}
+
+variable "server_instance_count" {
+  type    = number
+  default = 1
+}
+
+variable "agent_instance_count" {
+  type    = number
+  default = 2
 }

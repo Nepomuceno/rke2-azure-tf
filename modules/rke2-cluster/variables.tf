@@ -1,27 +1,34 @@
 variable "cluster_name" {
   type = string
 }
+
 variable "resource_group_name" {
   type = string
 }
+
 variable "vnet_id" {
   type = string
 }
-variable "snet_id" {
+
+variable "subnet_id" {
     type = string
 }
+
 variable "vnet_name" {
   type = string
 }
-variable "snet_name" {
+
+variable "subnet_name" {
     type = string
 }
+
 variable "service_principal" {
   type = object({
     client_id = string
     client_secret = string
   })
 }
+
 variable "cloud" {
   type = string
   default = "AzureUSGovernmentCloud"
@@ -30,16 +37,28 @@ variable "cloud" {
     error_message = "Allowed values for cloud are \"AzureUSGovernmentCloud\" or \"AzurePublicCloud\"."
   }
 }
+
 variable "vm_size" {
   type = string
   default = "Standard_DS4_v2"
 }
-variable "vm_count" {
+
+variable "server_instance_count" {
   type = number
   default = 1
+}
+
+variable "agent_instance_count" {
+  type = number
+  default = 2
 }
 
 variable "tags" {
   type = object({})
   default = {}
+}
+
+variable "server_public_ip" {
+  type = bool
+  default = false
 }

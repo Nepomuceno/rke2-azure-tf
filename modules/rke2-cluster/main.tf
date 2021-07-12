@@ -23,25 +23,26 @@ resource "azurerm_network_security_group" "k8s" {
 module "rke2" {
   source = "../rke2-server"
 
-  cluster_name        = var.cluster_name
-  resource_group_name = var.resource_group_name
+  cluster_name         = var.cluster_name
+  resource_group_name  = var.resource_group_name
 
-  virtual_network_id = var.vnet_id
-  subnet_id          = var.snet_id
+  virtual_network_id   = var.vnet_id
+  subnet_id            = var.subnet_id
   virtual_network_name = var.vnet_name
-  subnet_name          = var.snet_name
-  k8s_nsg_name       = azurerm_network_security_group.k8s.name
+  subnet_name          = var.subnet_name
+  k8s_nsg_name         = azurerm_network_security_group.k8s.name
 
-  service_principal = var.service_principal
+  service_principal    = var.service_principal
 
   admin_ssh_public_key = tls_private_key.default.public_key_openssh
 
-  servers = var.vm_count
+  servers = var.server_instance_count
   vm_size = var.vm_size
   priority = "Spot"
 
   enable_ccm = true
   cloud = var.cloud
+  public_ip = var.server_public_ip
 
   tags = var.tags
 }
@@ -54,16 +55,16 @@ module "generic_agents" {
   resource_group_name = var.resource_group_name
 
   virtual_network_id = var.vnet_id
-  subnet_id          = var.snet_id
+  subnet_id          = var.subnet_id
   virtual_network_name = var.vnet_name
-  subnet_name          = var.snet_name
+  subnet_name          = var.subnet_name
   k8s_nsg_name       = azurerm_network_security_group.k8s.name
 
   service_principal = var.service_principal
 
   admin_ssh_public_key = tls_private_key.default.public_key_openssh
 
-  instances = 1
+  instances = var.agent_instance_count
   vm_size = var.vm_size
   priority  = "Spot"
   cloud = var.cloud
@@ -106,14 +107,4 @@ resource "azurerm_network_security_rule" "ssh" {
   source_port_range          = "*"
   destination_address_prefix = "*"
   destination_port_range     = "22"
-}
-
-# Example method of fetching kubeconfig from state store, requires azure cli and bash locally
-resource "null_resource" "kubeconfig" {
-  depends_on = [module.rke2]
-
-  provisioner "local-exec" {
-    interpreter = ["bash", "-c"]
-    command     = "az keyvault secret show --name kubeconfig --vault-name ${module.rke2.token_vault_name} | jq -r '.value' > rke2.kubeconfig"
-  }
 }

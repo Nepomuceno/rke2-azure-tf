@@ -8,6 +8,7 @@
 
 # tf vars
 *.tfvars
+*.tfplan
 
 # rke2
 *.kubeconfig

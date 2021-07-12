@@ -178,6 +178,8 @@ module "cp_lb" {
   private_ip_address_allocation = var.controlplane_loadbalancer_private_ip_address_allocation
 
   tags = merge({}, var.tags)
+
+  type = var.public_ip ? "public" : "private"
 }
 
 module "servers" {

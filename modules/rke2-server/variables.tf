@@ -208,3 +208,8 @@ variable "cloud" {
     error_message = "Allowed values for cloud are \"AzureUSGovernmentCloud\" or \"AzurePublicCloud\"."
   }
 }
+
+variable "public_ip" {
+  type = bool
+  default = false
+}
