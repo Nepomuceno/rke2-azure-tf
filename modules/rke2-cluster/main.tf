@@ -45,6 +45,14 @@ module "rke2" {
   public_ip = var.server_public_ip
   open_ssh_public = var.server_open_ssh_public
 
+  # OS tuning 
+  pre_userdata = <<EOF
+sysctl -w vm.max_map_count=262144
+sysctl -w fs.file-max=131072
+ulimit -n 131072
+ulimit -u 8192
+EOF
+
   tags = var.tags
 }
 
@@ -69,6 +77,14 @@ module "generic_agents" {
   vm_size = var.vm_size
   priority  = "Spot"
   cloud = var.cloud
+
+  # OS tuning 
+  pre_userdata = <<EOF
+sysctl -w vm.max_map_count=262144
+sysctl -w fs.file-max=131072
+ulimit -n 131072
+ulimit -u 8192
+EOF
 
   tags = var.tags
 }

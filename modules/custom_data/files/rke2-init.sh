@@ -152,10 +152,13 @@ post_userdata() {
 
   if [ $CCM = "true" ]; then
     append_config 'cloud-provider-name: azure'
-    # $CLOUD_CONFIG > /etc/rancher/rke2/cloud.conf
     append_config 'cloud-provider-config: /etc/rancher/rke2/cloud.conf'
   fi
-#
+
+  # Config which is applied to both agent and server nodes
+  append_config 'node-label: ${node_labels}'
+  append_config 'node-taint: ${node_taints}'
+
   if [ $TYPE = "server" ]; then
     # Initialize server
     identify

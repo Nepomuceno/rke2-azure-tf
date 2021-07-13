@@ -9,8 +9,10 @@ data "template_file" "init" {
     token_secret = var.token_secret
     config       = var.config
     ccm          = var.ccm
-    cloud = var.cloud
-
+    cloud        = var.cloud
+    node_labels  = var.node_labels
+    node_taints  = var.node_taints
+    
     pre_userdata  = var.pre_userdata
     post_userdata = var.post_userdata
   }

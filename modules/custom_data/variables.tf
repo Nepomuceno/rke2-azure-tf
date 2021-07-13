@@ -40,6 +40,16 @@ variable "cloud" {
   }
 }
 
+variable "node_labels" {
+  type = string
+  default = "[]"
+}
+
+variable "node_taints" {
+  type = string
+  default = "[]"
+}
+
 #
 # Custom Userdata
 #

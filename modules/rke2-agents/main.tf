@@ -25,8 +25,11 @@ module "init" {
   config        = var.rke2_config
   pre_userdata  = var.pre_userdata
   post_userdata = var.post_userdata
-  ccm           = false
-  cloud = var.cloud
+  # Has to be set to true on agents for Azure disk based PVCs to mount
+  ccm           = true
+  cloud         = var.cloud
+  node_labels   = "[\"failure-domain.beta.kubernetes.io/region=${data.azurerm_resource_group.rg.location}\"]"
+  node_taints   = "[]"
 
   agent = true
 }
@@ -55,7 +58,7 @@ data "template_cloudinit_config" "init" {
     content = jsonencode({
       write_files = [
         {
-          content     = "vm.max_map_count=262144"
+          content     = "vm.max_map_count=262144\nsysctl -w fs.file-max=131072"
           path        = "/etc/sysctl.d/10-vm-map-count.conf"
           permissions = "5555"
         },
