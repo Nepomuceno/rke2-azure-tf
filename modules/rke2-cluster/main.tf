@@ -43,6 +43,7 @@ module "rke2" {
   enable_ccm = true
   cloud = var.cloud
   public_ip = var.server_public_ip
+  open_ssh_public = var.server_open_ssh_public
 
   tags = var.tags
 }

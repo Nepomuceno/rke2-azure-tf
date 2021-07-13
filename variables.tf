@@ -28,6 +28,11 @@ variable "server_public_ip" {
   default = false
 }
 
+variable "server_open_ssh_public" {
+  type    = bool
+  default = false
+}
+
 variable "vm_size" {
   type    = string
   default = "Standard_D8_v3"

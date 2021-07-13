@@ -12,6 +12,7 @@
 
 # rke2
 *.kubeconfig
+*.priv_key
 .ssh
 
 # VPN gateway

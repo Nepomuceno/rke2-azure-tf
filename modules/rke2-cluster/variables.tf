@@ -62,3 +62,8 @@ variable "server_public_ip" {
   type = bool
   default = false
 }
+
+variable "server_open_ssh_public" {
+  type = bool
+  default = false
+}

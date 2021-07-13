@@ -90,6 +90,17 @@ resource "azurerm_lb_rule" "supervisor" {
   probe_id                       = azurerm_lb_probe.this.id
 }
 
+resource "azurerm_lb_nat_pool" "ssh" {
+  resource_group_name            = data.azurerm_resource_group.rg.name
+  loadbalancer_id                = azurerm_lb.this.id
+  name                           = "SSHNatPool"
+  protocol                       = "Tcp"
+  frontend_port_start            = 5000
+  frontend_port_end              = 5100
+  backend_port                   = 22
+  frontend_ip_configuration_name = "${var.name}-lb-fe"
+}
+
 #
 # Load Balancer NAT Pools
 #

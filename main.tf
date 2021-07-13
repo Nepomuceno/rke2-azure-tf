@@ -58,10 +58,11 @@ module "rke2_cluster" {
   cloud               = var.cloud
   tags                = local.tags
 
-  server_public_ip      = var.server_public_ip
-  vm_size               = var.vm_size
-  server_instance_count = var.server_instance_count
-  agent_instance_count  = var.agent_instance_count
+  server_public_ip       = var.server_public_ip
+  server_open_ssh_public = var.server_open_ssh_public
+  vm_size                = var.vm_size
+  server_instance_count  = var.server_instance_count
+  agent_instance_count   = var.agent_instance_count
 
   depends_on = [
     azurerm_resource_group.rke2

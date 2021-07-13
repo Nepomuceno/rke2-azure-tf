@@ -212,13 +212,14 @@ module "servers" {
 
   health_probe_id                        = module.cp_lb.controlplane_probe_id
   load_balancer_backend_address_pool_ids = [module.cp_lb.backend_pool_id]
+  load_balancer_inbound_nat_rules_ids    = var.open_ssh_public ? [module.cp_lb.azurerm_lb_nat_pool_ssh_id] : []
 
   identity_ids = [azurerm_user_assigned_identity.cluster.id]
   custom_data  = data.template_cloudinit_config.init.rendered
 
   enable_automatic_instance_repair       = var.enable_automatic_instance_repair
   automatic_instance_repair_grace_period = var.enable_automatic_instance_repair ? var.automatic_instance_repair_grace_period : null
-
+  
   os_disk_size_gb              = var.os_disk_size_gb
   os_disk_storage_account_type = var.os_disk_storage_account_type
   os_disk_encryption_set_id    = var.os_disk_encryption_set_id

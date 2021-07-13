@@ -213,3 +213,8 @@ variable "public_ip" {
   type = bool
   default = false
 }
+
+variable "open_ssh_public" {
+  type = bool
+  default = false
+}
