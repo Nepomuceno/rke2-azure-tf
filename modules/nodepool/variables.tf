@@ -21,7 +21,7 @@ variable "eviction_policy" {
 }
 
 variable "priority" {
-  default = "Spot"
+  default = "Regular" #"Spot"
 }
 
 variable "health_probe_id" {

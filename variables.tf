@@ -16,13 +16,6 @@ variable "cloud" {
   }
 }
 
-variable "service_principal" {
-  type = object({
-    client_id     = string
-    client_secret = string
-  })
-}
-
 variable "server_public_ip" {
   type    = bool
   default = false

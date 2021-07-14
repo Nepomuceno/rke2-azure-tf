@@ -103,6 +103,7 @@ variable "cluster_data" {
     name                = string
     server_url          = string
     cluster_identity_id = string
+    cluster_identity_client_id = string
     token = object({
       vault_url    = string
       token_secret = string
@@ -183,13 +184,6 @@ variable "additional_data_disks" {
     storage_account_type = string
   }))
   default = []
-}
-
-variable "service_principal" {
-  type = object({
-    client_id = string
-    client_secret = string
-  })
 }
 
 variable "cloud" {

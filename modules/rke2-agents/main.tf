@@ -65,8 +65,7 @@ data "template_cloudinit_config" "init" {
         {
           content = templatefile("${path.module}/../custom_data/files/azure-cloud.conf.template", {
             tenant_id = data.azurerm_client_config.current.tenant_id
-            client_id = var.service_principal.client_id
-            client_secret = var.service_principal.client_secret
+            user_assigned_identity_id = var.cluster_data.cluster_identity_client_id
             subscription_id = data.azurerm_client_config.current.subscription_id
             rg_name = data.azurerm_resource_group.rg.name
             location = data.azurerm_resource_group.rg.location

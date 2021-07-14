@@ -54,7 +54,6 @@ module "rke2_cluster" {
   subnet_id           = azurerm_subnet.rke2.id
   vnet_name           = azurerm_virtual_network.rke2.name
   subnet_name         = azurerm_subnet.rke2.name
-  service_principal   = var.service_principal
   cloud               = var.cloud
   tags                = local.tags
 

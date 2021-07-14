@@ -56,6 +56,23 @@ resource "azurerm_role_assignment" "cluster_reader" {
   role_definition_name = "Reader"
 }
 
+
+resource "azurerm_role_assignment" "role1" {
+    scope = data.azurerm_resource_group.rg.id #module.servers.scale_set_id 
+    role_definition_name = "Contributor"
+    principal_id = azurerm_user_assigned_identity.cluster.principal_id
+    skip_service_principal_aad_check = true
+
+}
+
+resource "azurerm_role_assignment" "role2" {
+    scope = data.azurerm_resource_group.rg.id #module.servers.scale_set_id 
+    role_definition_name = "Network Contributor"
+    principal_id = azurerm_user_assigned_identity.cluster.principal_id
+    skip_service_principal_aad_check = true
+
+}
+
 #
 # Server Network Security Group
 #
@@ -152,8 +169,7 @@ data "template_cloudinit_config" "init" {
         {
           content = templatefile("${path.module}/../custom_data/files/azure-cloud.conf.template", {
             tenant_id = data.azurerm_client_config.current.tenant_id
-            client_id = var.service_principal.client_id
-            client_secret = var.service_principal.client_secret
+            user_assigned_identity_id = azurerm_user_assigned_identity.cluster.client_id
             subscription_id = data.azurerm_client_config.current.subscription_id
             rg_name = data.azurerm_resource_group.rg.name
             location = data.azurerm_resource_group.rg.location

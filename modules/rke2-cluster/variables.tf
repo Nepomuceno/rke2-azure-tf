@@ -22,13 +22,6 @@ variable "subnet_name" {
     type = string
 }
 
-variable "service_principal" {
-  type = object({
-    client_id = string
-    client_secret = string
-  })
-}
-
 variable "cloud" {
   type = string
   default = "AzureUSGovernmentCloud"

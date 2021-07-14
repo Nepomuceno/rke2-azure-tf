@@ -32,13 +32,11 @@ module "rke2" {
   subnet_name          = var.subnet_name
   k8s_nsg_name         = azurerm_network_security_group.k8s.name
 
-  service_principal    = var.service_principal
-
   admin_ssh_public_key = tls_private_key.default.public_key_openssh
 
   servers = var.server_instance_count
   vm_size = var.vm_size
-  priority = "Spot"
+  priority = "Regular" #"Spot"
 
   enable_ccm = true
   cloud = var.cloud
@@ -69,13 +67,11 @@ module "generic_agents" {
   subnet_name          = var.subnet_name
   k8s_nsg_name       = azurerm_network_security_group.k8s.name
 
-  service_principal = var.service_principal
-
   admin_ssh_public_key = tls_private_key.default.public_key_openssh
 
   instances = var.agent_instance_count
   vm_size = var.vm_size
-  priority  = "Spot"
+  priority  = "Regular" #"Spot"
   cloud = var.cloud
 
   # OS tuning 

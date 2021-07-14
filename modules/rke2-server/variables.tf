@@ -193,13 +193,6 @@ variable "additional_data_disks" {
   default = []
 }
 
-variable "service_principal" {
-  type = object({
-    client_id = string
-    client_secret = string
-  })
-}
-
 variable "cloud" {
   type = string
   default = "AzureUSGovernmentCloud"
