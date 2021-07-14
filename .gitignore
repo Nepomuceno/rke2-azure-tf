@@ -6,9 +6,10 @@
 *.tfstate.*
 *.terraform.lock.hcl*
 
-# tf vars
+# tf vars & plans
 *.tfvars
 *.tfplan
+!sample.tfvars
 
 # rke2
 *.kubeconfig
