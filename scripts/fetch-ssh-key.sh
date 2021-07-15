@@ -3,9 +3,9 @@
 set -e
 
 FILE_NAME="rke2.priv_key"
-KV_NAME=$(terraform output -raw kv_name)
-SERVER_URL=$(terraform output -json rke2_cluster | jq -r '.server_url')
 
+KV_NAME=${1:-$(terraform output -raw kv_name)}
+SERVER_URL=$(terraform output -json rke2_cluster | jq -r '.server_url')
 az keyvault secret show --name node-key --vault-name $KV_NAME | jq -r '.value' > $FILE_NAME
 chmod 600 $FILE_NAME
 

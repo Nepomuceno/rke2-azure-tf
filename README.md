@@ -27,6 +27,12 @@ source scripts/fetch-kubeconfig.sh
 
 Now you can run kubectl commands against the cluster as normal, e.g. `kubectl get nodes` or `kubectl get pods -A` to see the status and health of the cluster.
 
+# Smoke Tests
+
+A set of simple smoke tests is provided to validate the cluster is healthy and can communicate with Azure
+
+See [Smoke Tests for Bare Metal Kubernetes on Azure](./tests/readme.md)
+
 # SSH to Servers (Control Plane)
 
 If you set `server_open_ssh_public` to true, then SSH will be allowed onto the server nodes, through the control plane load balancer. 

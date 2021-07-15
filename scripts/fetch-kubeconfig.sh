@@ -1,15 +1,19 @@
 #!/bin/bash
 
-[[ $_ != $0 ]] && { echo "You must source this script not execute directly"; exit 1; } 
+if [[ "$0" = "$BASH_SOURCE" ]]; then
+  echo "Please source this script. Do not execute."
+  exit 1
+fi
 
 DIRECTORY=$(dirname $0)
-KV_NAME=$(terraform output -raw kv_name)
+
+KV_NAME=${1:-$(terraform output -raw kv_name)}
 FILE=$(realpath ${DIRECTORY}/../rke2.kubeconfig)
 
 echo "Fetching kubeconfig from KeyVault $KV_NAME"
 az keyvault secret show --name kubeconfig --vault-name $KV_NAME | jq -r '.value' > $FILE
 
-if [[ $# == 0 ]]; then
-  echo "Setting KUBECONFIG to $FILE"
+if [ $? -eq 0 ]; then
+  echo "Download successful. Setting KUBECONFIG to $FILE"
   export KUBECONFIG=$FILE
 fi
