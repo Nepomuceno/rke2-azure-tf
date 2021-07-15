@@ -23,8 +23,8 @@ resource "azurerm_network_security_group" "k8s" {
 module "rke2" {
   source = "../rke2-server"
 
-  cluster_name         = var.cluster_name
-  resource_group_name  = var.resource_group_name
+  cluster_name        = var.cluster_name
+  resource_group_name = var.resource_group_name
 
   virtual_network_id   = var.vnet_id
   subnet_id            = var.subnet_id
@@ -34,13 +34,13 @@ module "rke2" {
 
   admin_ssh_public_key = tls_private_key.default.public_key_openssh
 
-  servers = var.server_instance_count
-  vm_size = var.vm_size
+  servers  = var.server_instance_count
+  vm_size  = var.vm_size
   priority = "Regular" #"Spot"
 
-  enable_ccm = true
-  cloud = var.cloud
-  public_ip = var.server_public_ip
+  enable_ccm      = true
+  cloud           = var.cloud
+  public_ip       = var.server_public_ip
   open_ssh_public = var.server_open_ssh_public
 
   # OS tuning 
@@ -61,18 +61,18 @@ module "generic_agents" {
   name                = "generic"
   resource_group_name = var.resource_group_name
 
-  virtual_network_id = var.vnet_id
-  subnet_id          = var.subnet_id
+  virtual_network_id   = var.vnet_id
+  subnet_id            = var.subnet_id
   virtual_network_name = var.vnet_name
   subnet_name          = var.subnet_name
-  k8s_nsg_name       = azurerm_network_security_group.k8s.name
+  k8s_nsg_name         = azurerm_network_security_group.k8s.name
 
   admin_ssh_public_key = tls_private_key.default.public_key_openssh
 
   instances = var.agent_instance_count
-  vm_size = var.vm_size
+  vm_size   = var.vm_size
   priority  = "Regular" #"Spot"
-  cloud = var.cloud
+  cloud     = var.cloud
 
   # OS tuning 
   pre_userdata = <<EOF

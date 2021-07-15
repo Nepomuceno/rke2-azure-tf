@@ -7,7 +7,7 @@ output "kv_name" {
 }
 
 output "rg_name" {
-  value = azurerm_resource_group.rke2.name
+  value = local.resource_group_name
 }
 
 # output "client_cert" {

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     azurerm = {
-      version = "~>2.66.0"
+      version = "~>2.67.0"
       source  = "hashicorp/azurerm"
     }
     tls = {
@@ -11,49 +11,24 @@ terraform {
   }
 }
 
-provider "azurerm" {
-  features {}
-}
-
 locals {
   tags = {
     "Environment" = var.cluster_name,
     "Terraform"   = "true",
   }
+  network_details     = regex("^(?P<vnet_id>\\/subscriptions\\/(?P<subscription>[^\\/]*)\\/resourceGroups\\/(?P<resource_group>[^\\/]*)\\/providers\\/Microsoft\\.Network\\/virtualNetworks\\/(?P<vnet>[^\\/]*))\\/subnets\\/(?P<subnet>[^\\/]*)$", var.subnet_id)
+  resource_group_name = length(var.resource_group_name) > 0 ? var.resource_group_name : local.network_details.resource_group
 }
 
-resource "azurerm_resource_group" "rke2" {
-  name     = var.cluster_name
-  location = var.location
-}
-
-resource "azurerm_virtual_network" "rke2" {
-  name          = "${var.cluster_name}-vnet"
-  address_space = ["10.0.0.0/16"]
-
-  resource_group_name = azurerm_resource_group.rke2.name
-  location            = azurerm_resource_group.rke2.location
-
-  tags = local.tags
-}
-
-resource "azurerm_subnet" "rke2" {
-  name = "${var.cluster_name}-snet"
-
-  resource_group_name  = azurerm_resource_group.rke2.name
-  virtual_network_name = azurerm_virtual_network.rke2.name
-
-  address_prefixes = ["10.0.1.0/24"]
-}
 
 module "rke2_cluster" {
   source              = "./modules/rke2-cluster"
   cluster_name        = var.cluster_name
-  resource_group_name = azurerm_resource_group.rke2.name
-  vnet_id             = azurerm_virtual_network.rke2.id
-  subnet_id           = azurerm_subnet.rke2.id
-  vnet_name           = azurerm_virtual_network.rke2.name
-  subnet_name         = azurerm_subnet.rke2.name
+  resource_group_name = local.resource_group_name
+  vnet_id             = local.network_details.vnet_id
+  subnet_id           = var.subnet_id
+  vnet_name           = local.network_details.vnet
+  subnet_name         = local.network_details.subnet
   cloud               = var.cloud
   tags                = local.tags
 
@@ -62,8 +37,4 @@ module "rke2_cluster" {
   vm_size                = var.vm_size
   server_instance_count  = var.server_instance_count
   agent_instance_count   = var.agent_instance_count
-
-  depends_on = [
-    azurerm_resource_group.rke2
-  ]
 }

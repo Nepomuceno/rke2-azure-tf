@@ -1,15 +1,18 @@
 variable "cluster_name" {
-  type = string
+  description = "Prefix used for all resources"
+  type        = string
 }
 
-variable "location" {
-  type    = string
-  default = "usgovvirginia"
+variable "subnet_id" {
+  description = "Subnet where to deploy the cluster resources"
+  type        = string
+
 }
 
 variable "cloud" {
-  type    = string
-  default = "AzureUSGovernmentCloud"
+  description = "Which Azure cloud to use"
+  type        = string
+  default     = "AzureUSGovernmentCloud"
   validation {
     condition     = contains(["AzureUSGovernmentCloud", "AzurePublicCloud"], var.cloud)
     error_message = "Allowed values for cloud are \"AzureUSGovernmentCloud\" or \"AzurePublicCloud\"."
@@ -17,13 +20,15 @@ variable "cloud" {
 }
 
 variable "server_public_ip" {
-  type    = bool
-  default = false
+  description = "Assign a public IP to the control plane load balancer"
+  type        = bool
+  default     = false
 }
 
 variable "server_open_ssh_public" {
-  type    = bool
-  default = false
+  description = "Allow SSH to the server nodes through the control plane load balancer"
+  type        = bool
+  default     = false
 }
 
 variable "vm_size" {
@@ -39,4 +44,10 @@ variable "server_instance_count" {
 variable "agent_instance_count" {
   type    = number
   default = 2
+}
+
+variable "resource_group_name" {
+  description = "(Optional) the name of an existing resource group to be used if not specified the subnet resource group will be used"
+  type        = string
+  default     = ""
 }

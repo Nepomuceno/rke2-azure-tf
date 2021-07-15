@@ -22,14 +22,7 @@ This project includes the Terraform configuration to deploy an RKE2 cluster in A
 
 1. The dev environment with all the development requirements can be set up by starting the devcontainer in [.devcontainer](.devcontainer).
 
-2. Copy `sample.tfvars` to your own copy e.g. `terraform.tfvars` modify variables to suit your deployment, such as region and which Azure cloud to use, you will probably want to change the `cluster_name` as well.
-
-3. Deploy the RKE2 cluster with:
-
-    ```bash
-    terraform init
-    terraform apply --auto-approve
-    ```
+2. An example usage of this module can be found in the [example](./example) folder
 
 # Connecting to RKE2
 
