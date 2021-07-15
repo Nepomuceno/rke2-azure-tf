@@ -1,10 +1,28 @@
-This project includes the Terraform configuration to deploy an RKE2 cluster in Azure
+This project includes the Terraform configuration to deploy an RKE2 cluster in Azure.
+
+# Notes
+
+1. The terraform script does not work within Azure Cloudshell because of a Cloudshell/Terraform AzureRM provider [issue](https://github.com/terraform-providers/terraform-provider-azurerm/issues/7787).
+1. A .devcontainer is provided with all dependencies installed. It is not required to be used.
+1. The .devcontainer can be easily utilised from VS Code.
+1. It is expected that the cloud target has been set using az cloud set -name AzureUSGovernment and an az login and subscription setting has been performed.
+1. The .tfvar cloud variable values are determined by the Kubernetes azure cloud provider which utilises the [go-autorest library](https://github.com/Azure/go-autorest/blob/v9.9.0/autorest/azure/environments.go#L29) which doesn't use Azure defined cloud names.
+
+# Supported Azure regions
+
+1. USGovVirginia
+
+# Unsuported Azure regions
+
+1. USGovArizona - LocationNotSupportAvailabilityZones
+
+
 
 # Getting Started
 
 1. The dev environment with all the development requirements can be set up by starting the devcontainer in [.devcontainer](.devcontainer).
 
-2. Copy `sample.tfvars` to your own copy e.g. `mycluster.tfvars` modify variables to suit your deployment, such as region and which Azure cloud to use, you will probably want to change the `cluster_name` as well.
+2. Copy `sample.tfvars` to your own copy e.g. `terraform.tfvars` modify variables to suit your deployment, such as region and which Azure cloud to use, you will probably want to change the `cluster_name` as well.
 
 3. Deploy the RKE2 cluster with:
 
