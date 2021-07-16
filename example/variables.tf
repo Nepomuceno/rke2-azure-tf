@@ -36,7 +36,7 @@ variable "agent_instance_count" {
 }
 
 variable "cluster_name" {
-  type    = string
+  type = string
 }
 
 variable "location" {
