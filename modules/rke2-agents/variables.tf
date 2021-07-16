@@ -10,7 +10,7 @@ variable "virtual_network_name" {
   type = string
 }
 variable "subnet_name" {
-    type = string
+  type = string
 }
 
 variable "admin_username" {
@@ -100,9 +100,9 @@ variable "cluster_data" {
   description = "Required data relevant to joining an existing rke2 cluster, sourced from main rke2 module, do NOT modify"
 
   type = object({
-    name                = string
-    server_url          = string
-    cluster_identity_id = string
+    name                       = string
+    server_url                 = string
+    cluster_identity_id        = string
     cluster_identity_client_id = string
     token = object({
       vault_url    = string
@@ -187,7 +187,7 @@ variable "additional_data_disks" {
 }
 
 variable "cloud" {
-  type = string
+  type    = string
   default = "AzureUSGovernmentCloud"
   validation {
     condition     = contains(["AzureUSGovernmentCloud", "AzurePublicCloud"], var.cloud)

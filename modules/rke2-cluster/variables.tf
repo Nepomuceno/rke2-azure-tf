@@ -11,7 +11,7 @@ variable "vnet_id" {
 }
 
 variable "subnet_id" {
-    type = string
+  type = string
 }
 
 variable "vnet_name" {
@@ -19,11 +19,11 @@ variable "vnet_name" {
 }
 
 variable "subnet_name" {
-    type = string
+  type = string
 }
 
 variable "cloud" {
-  type = string
+  type    = string
   default = "AzureUSGovernmentCloud"
   validation {
     condition     = contains(["AzureUSGovernmentCloud", "AzurePublicCloud"], var.cloud)
@@ -32,31 +32,31 @@ variable "cloud" {
 }
 
 variable "vm_size" {
-  type = string
+  type    = string
   default = "Standard_DS4_v2"
 }
 
 variable "server_instance_count" {
-  type = number
+  type    = number
   default = 1
 }
 
 variable "agent_instance_count" {
-  type = number
+  type    = number
   default = 2
 }
 
 variable "tags" {
-  type = object({})
+  type    = object({})
   default = {}
 }
 
 variable "server_public_ip" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "server_open_ssh_public" {
-  type = bool
+  type    = bool
   default = false
 }

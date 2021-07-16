@@ -32,7 +32,7 @@ variable "ccm" {
 }
 
 variable "cloud" {
-  type = string
+  type    = string
   default = "AzureUSGovernmentCloud"
   validation {
     condition     = contains(["AzureUSGovernmentCloud", "AzurePublicCloud"], var.cloud)
@@ -41,12 +41,12 @@ variable "cloud" {
 }
 
 variable "node_labels" {
-  type = string
+  type    = string
   default = "[]"
 }
 
 variable "node_taints" {
-  type = string
+  type    = string
   default = "[]"
 }
 

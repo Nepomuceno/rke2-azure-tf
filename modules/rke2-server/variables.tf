@@ -194,7 +194,7 @@ variable "additional_data_disks" {
 }
 
 variable "cloud" {
-  type = string
+  type    = string
   default = "AzureUSGovernmentCloud"
   validation {
     condition     = contains(["AzureUSGovernmentCloud", "AzurePublicCloud"], var.cloud)
@@ -203,11 +203,11 @@ variable "cloud" {
 }
 
 variable "public_ip" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "open_ssh_public" {
-  type = bool
+  type    = bool
   default = false
 }

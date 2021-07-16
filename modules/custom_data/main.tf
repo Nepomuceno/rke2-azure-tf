@@ -12,7 +12,7 @@ data "template_file" "init" {
     cloud        = var.cloud
     node_labels  = var.node_labels
     node_taints  = var.node_taints
-    
+
     pre_userdata  = var.pre_userdata
     post_userdata = var.post_userdata
   }

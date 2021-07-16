@@ -26,10 +26,10 @@ module "init" {
   pre_userdata  = var.pre_userdata
   post_userdata = var.post_userdata
   # Has to be set to true on agents for Azure disk based PVCs to mount
-  ccm           = true
-  cloud         = var.cloud
-  node_labels   = "[\"failure-domain.beta.kubernetes.io/region=${data.azurerm_resource_group.rg.location}\"]"
-  node_taints   = "[]"
+  ccm         = true
+  cloud       = var.cloud
+  node_labels = "[\"failure-domain.beta.kubernetes.io/region=${data.azurerm_resource_group.rg.location}\"]"
+  node_taints = "[]"
 
   agent = true
 }
@@ -64,15 +64,15 @@ data "template_cloudinit_config" "init" {
         },
         {
           content = templatefile("${path.module}/../custom_data/files/azure-cloud.conf.template", {
-            tenant_id = data.azurerm_client_config.current.tenant_id
+            tenant_id                 = data.azurerm_client_config.current.tenant_id
             user_assigned_identity_id = var.cluster_data.cluster_identity_client_id
-            subscription_id = data.azurerm_client_config.current.subscription_id
-            rg_name = data.azurerm_resource_group.rg.name
-            location = data.azurerm_resource_group.rg.location
-            subnet_name = var.subnet_name
-            virtual_network_name = var.virtual_network_name
-            nsg_name = var.k8s_nsg_name
-            cloud = var.cloud
+            subscription_id           = data.azurerm_client_config.current.subscription_id
+            rg_name                   = data.azurerm_resource_group.rg.name
+            location                  = data.azurerm_resource_group.rg.location
+            subnet_name               = var.subnet_name
+            virtual_network_name      = var.virtual_network_name
+            nsg_name                  = var.k8s_nsg_name
+            cloud                     = var.cloud
           })
           path        = "/etc/rancher/rke2/cloud.conf"
           permissions = "5555"
