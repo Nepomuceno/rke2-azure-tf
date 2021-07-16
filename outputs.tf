@@ -9,25 +9,3 @@ output "kv_name" {
 output "rg_name" {
   value = local.resource_group_name
 }
-
-# output "client_cert" {
-#   value     = module.vpn_gateway.client_cert
-#   sensitive = true
-# }
-
-# output "client_key" {
-#   value     = module.vpn_gateway.client_key
-#   sensitive = true
-# }
-
-# output "vpn_gateway_id" {
-#   value = module.vpn_gateway.vpn_id
-# }
-
-# output "vpn_gateway_ip" {
-#   value = module.vpn_gateway.vpn_ip
-# }
-
-# output "vpn_gateway_name" {
-#   value = module.vpn_gateway.vpn_name
-# }

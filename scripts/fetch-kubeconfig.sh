@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ ! -f terraform.tfstate ]]; then
+  echo "Unable to find terraform.tfstate please run from the directory you ran terraform apply"
+  exit 1
+fi
+
 if [[ "$0" = "$BASH_SOURCE" ]]; then
   echo "Please source this script. Do not execute."
   exit 1
@@ -8,7 +13,7 @@ fi
 DIRECTORY=$(dirname $0)
 
 KV_NAME=${1:-$(terraform output -raw kv_name)}
-FILE=$(realpath ${DIRECTORY}/../rke2.kubeconfig)
+FILE=$(realpath rke2.kubeconfig)
 
 echo "Fetching kubeconfig from KeyVault $KV_NAME"
 az keyvault secret show --name kubeconfig --vault-name $KV_NAME | jq -r '.value' > $FILE

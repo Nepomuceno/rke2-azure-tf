@@ -34,6 +34,7 @@ A script is provided to download the kubeconfig file needed to access the cluste
 source scripts/fetch-kubeconfig.sh
 ```
 
+> **Note.** You must run this from the location where Terraform apply has been run and there is a terraform.tfstate file
 > **Note.** You must source the script, also you may have to wait for a minute or two after deploying the cluster before the kubeconfig is ready
 
 Now you can run kubectl commands against the cluster as normal, e.g. `kubectl get nodes` or `kubectl get pods -A` to see the status and health of the cluster.
@@ -62,5 +63,7 @@ A script is provided that will download the SSH private key from KeyVault and te
 ```bash
 ./scripts/fetch-ssh-key.sh
 ```
+
+> **Note.** You must run this from the location where Terraform apply has been run and there is a terraform.tfstate file
 
 > **Note.** For reasons unknown sometimes the scale set takes some time to settle down, and even with a single instance, it might not be instance 0, it can be 1 or even 2, so try ports 5001 and 5002 if 5000 doesn't work
