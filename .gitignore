@@ -19,3 +19,6 @@
 # VPN gateway
 .openvpn
 *.ovpn
+
+# Test output
+tests/*.xml
