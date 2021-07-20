@@ -35,7 +35,7 @@ module "rke2" {
   admin_ssh_public_key = tls_private_key.default.public_key_openssh
 
   servers  = var.server_instance_count
-  vm_size  = var.vm_size
+  vm_size  = length(var.server_vm_size) > 0 ? var.server_vm_size : var.vm_size
   priority = "Regular" #"Spot"
 
   enable_ccm      = true
@@ -70,7 +70,7 @@ module "generic_agents" {
   admin_ssh_public_key = tls_private_key.default.public_key_openssh
 
   instances = var.agent_instance_count
-  vm_size   = var.vm_size
+  vm_size   = length(var.agent_vm_size) > 0 ? var.agent_vm_size : var.vm_size
   priority  = "Regular" #"Spot"
   cloud     = var.cloud
 

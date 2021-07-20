@@ -35,6 +35,8 @@ module "rke2_cluster" {
   server_public_ip       = var.server_public_ip
   server_open_ssh_public = var.server_open_ssh_public
   vm_size                = var.vm_size
+  agent_vm_size          = var.agent_vm_size
+  server_vm_size         = var.server_vm_size
   server_instance_count  = var.server_instance_count
   agent_instance_count   = var.agent_instance_count
 }

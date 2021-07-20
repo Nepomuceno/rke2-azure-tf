@@ -36,6 +36,18 @@ variable "vm_size" {
   default = "Standard_DS4_v2"
 }
 
+variable "server_vm_size" {
+  type        = string
+  description = "VM size to use for the server nodes"
+  default     = ""
+}
+
+variable "agent_vm_size" {
+  type        = string
+  description = "VM size to use for the agent nodes"
+  default     = ""
+}
+
 variable "server_instance_count" {
   type    = number
   default = 1

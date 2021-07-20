@@ -32,8 +32,21 @@ variable "server_open_ssh_public" {
 }
 
 variable "vm_size" {
-  type    = string
-  default = "Standard_D8_v3"
+  description = "Default VM size to use for the cluster"
+  type        = string
+  default     = "Standard_D8_v3"
+}
+
+variable "server_vm_size" {
+  type        = string
+  description = "VM size to use for the server nodes"
+  default     = ""
+}
+
+variable "agent_vm_size" {
+  type        = string
+  description = "VM size to use for the agent nodes"
+  default     = ""
 }
 
 variable "server_instance_count" {
