@@ -162,7 +162,7 @@ variable "enable_automatic_instance_repair" {
 variable "automatic_instance_repair_grace_period" {
   description = "TODO: (Optional) Toggle accelerated networking for server scale set."
   type        = string
-  default     = "PT10M"
+  default     = "PT50M"
 }
 
 variable "os_disk_storage_account_type" {
