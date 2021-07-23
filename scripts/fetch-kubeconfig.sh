@@ -16,7 +16,7 @@ KV_NAME=${1:-$(terraform output -raw kv_name)}
 FILE=$(realpath rke2.kubeconfig)
 
 echo "Fetching kubeconfig from KeyVault $KV_NAME"
-az keyvault secret show --name kubeconfig --vault-name $KV_NAME | jq -r '.value' > $FILE
+az keyvault secret show --name kubeconfig --vault-name $KV_NAME -o json | jq -r '.value' > $FILE
 
 if [ $? -eq 0 ]; then
   echo "Download successful. Setting KUBECONFIG to $FILE"
