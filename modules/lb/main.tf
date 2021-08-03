@@ -8,9 +8,11 @@ resource "azurerm_public_ip" "pip" {
   name              = "${var.name}-pip"
   allocation_method = "Static"
   sku               = "Standard"
+  availability_zone = var.zone
 
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
+
 
   tags = merge({}, var.tags)
 }
@@ -29,6 +31,7 @@ resource "azurerm_lb" "this" {
     subnet_id                     = var.type == "public" ? null : var.subnet_id
     private_ip_address            = var.private_ip_address
     private_ip_address_allocation = var.private_ip_address_allocation
+    availability_zone             = var.zone
     # sku = "Standard"
   }
 
