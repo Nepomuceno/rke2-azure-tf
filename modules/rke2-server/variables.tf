@@ -106,11 +106,6 @@ variable "tags" {
   default = {}
 }
 
-variable "overprovision" {
-  description = "(Optional) Toggle server scaleset overprovisioning."
-  default     = true
-}
-
 variable "zones" {
   description = "(Optional) List of availability zones servers should be created in."
   type        = list(number)

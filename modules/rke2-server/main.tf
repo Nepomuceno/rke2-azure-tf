@@ -218,9 +218,10 @@ module "servers" {
   admin_username       = var.admin_username
   admin_ssh_public_key = var.admin_ssh_public_key
 
-  vm_size                       = var.vm_size
-  instances                     = var.servers
-  overprovision                 = var.overprovision
+  vm_size   = var.vm_size
+  instances = var.servers
+  # Forcing this to false, as the RKE2 bootstrap now relies on well ordered hostnames to stagger the join process
+  overprovision                 = false
   zones                         = var.zones
   zone_balance                  = var.zone_balance
   single_placement_group        = var.single_placement_group

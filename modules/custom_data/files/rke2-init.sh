@@ -29,11 +29,11 @@ EOF
 }
 
 append_config() {
-  echo $1 >> "/etc/rancher/rke2/config.yaml"
+  echo "$1" >> "/etc/rancher/rke2/config.yaml"
 }
 
 get_azure_domain() {
-  if [ $CLOUD = "AzureUSGovernmentCloud" ]; then
+  if [ "$CLOUD" = "AzureUSGovernmentCloud" ]; then
     echo 'usgovcloudapi.net'
   else
     echo 'azure.com'
@@ -68,9 +68,9 @@ identify() {
   # Default to server
   SERVER_TYPE="server"
 
-  supervisor_status=$(curl --max-time 5.0 --write-out '%%{http_code}' -sk --output /dev/null https://${server_url}:9345/ping)
+  supervisor_status=$(curl --max-time 5.0 --write-out '%%{http_code}' -sk --output /dev/null https://"${server_url}":9345/ping)
 
-  if [ $supervisor_status -ne 200 ]; then
+  if [ "$supervisor_status" -ne 200 ]; then
     info "API server unavailable, performing simple leader election"
     elect_leader
   else
@@ -80,12 +80,11 @@ identify() {
 
 cp_wait() {
   while true; do
-    supervisor_status=$(curl --write-out '%%{http_code}' -sk --output /dev/null https://${server_url}:9345/ping)
-    if [ $supervisor_status -eq 200 ]; then
+    supervisor_status=$(curl --max-time 5.0 --write-out '%%{http_code}' -sk --output /dev/null https://"${server_url}":9345/ping)
+    if [ "$supervisor_status" -eq 200 ]; then
       info "Cluster is ready"
 
-      # Let things settle down for a bit, not required
-      # TODO: Remove this after some testing
+      # Let things settle down for a bit, without this HA cluster creation is very unreliable
       sleep 10
       break
     fi
@@ -150,7 +149,7 @@ post_userdata() {
   config
   fetch_token
 
-  if [ $CCM = "true" ]; then
+  if [ "$CCM" = "true" ]; then
     append_config 'cloud-provider-name: azure'
     append_config 'cloud-provider-config: /etc/rancher/rke2/cloud.conf'
   fi
@@ -159,7 +158,7 @@ post_userdata() {
   append_config 'node-label: ${node_labels}'
   append_config 'node-taint: ${node_taints}'
 
-  if [ $TYPE = "server" ]; then
+  if [ "$TYPE" = "server" ]; then
     # Initialize server
     identify
 
@@ -173,6 +172,14 @@ EOF
       # Wait for cluster to exist, then init another server
       cp_wait
     fi
+
+    # This attempts to stagger the times when servers try to join the cluster
+    # We rely on the well ordered cardinal host names that VMSS will assign
+    host=$(hostname)
+    hostNum=$${host: -2}
+    sleepTime=$(( hostNum * 80 ))
+    info "Staggering process, waiting extra $sleepTime seconds before joining..."
+    sleep $sleepTime
 
     systemctl enable rke2-server
     systemctl daemon-reload
