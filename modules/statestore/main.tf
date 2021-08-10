@@ -46,21 +46,6 @@ resource "azurerm_key_vault_access_policy" "service_reader" {
   }
 }
 
-//resource "azurerm_key_vault_access_policy" "working" {
-//  key_vault_id = azurerm_key_vault.this.id
-//  tenant_id = ""
-//  object_id = ""
-//
-//  key_permissions = []
-//  secret_permissions = ["Get", "List"]
-//  certificate_permissions = []
-//  storage_permissions = []
-//
-//  lifecycle {
-//    create_before_destroy = true
-//  }
-//}
-
 resource "azurerm_key_vault_secret" "token" {
   name         = "${var.name}-token"
   key_vault_id = azurerm_key_vault.this.id

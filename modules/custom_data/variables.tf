@@ -41,13 +41,15 @@ variable "cloud" {
 }
 
 variable "node_labels" {
-  type    = string
-  default = "[]"
+  description = "Node labels to add to the cluster"
+  type        = string
+  default     = "[]"
 }
 
 variable "node_taints" {
-  type    = string
-  default = "[]"
+  description = "Node taints to add to the cluster"
+  type        = string
+  default     = "[]"
 }
 
 #

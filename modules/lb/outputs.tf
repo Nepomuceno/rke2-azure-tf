@@ -6,11 +6,6 @@ output "backend_pool_id" {
   value = azurerm_lb_backend_address_pool.bepool.id
 }
 
-//output "controlplane_nat_pool_id" {
-//  value = azurerm_lb_nat_pool.controlplane.id
-//}
-//
-
 output "azurerm_lb_nat_pool_ssh_id" {
   value = azurerm_lb_nat_pool.ssh.id
 }

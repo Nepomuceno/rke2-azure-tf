@@ -50,13 +50,15 @@ variable "agent_vm_size" {
 }
 
 variable "server_instance_count" {
-  type    = number
-  default = 1
+  description = "Number of server nodes to deploy"
+  type        = number
+  default     = 1
 }
 
 variable "agent_instance_count" {
-  type    = number
-  default = 2
+  description = "Number of agent nodes to deploy"
+  type        = number
+  default     = 2
 }
 
 variable "resource_group_name" {

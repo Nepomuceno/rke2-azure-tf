@@ -4,7 +4,7 @@ This is an example RKE2 deployment which uses the main module at the root of thi
 
 ## Quick Deployment
 
-- Run from this example directory, e.g. `cd example`
+- Run from this examples directory, e.g. `cd examples/quickstart`
 - Copy `terraform.tfvars.sample` to `terraform.tfvars` 
 - Change `cluster_name` and other settings, but most can be left as the defaults 
 - Run `terraform apply -auto-approve`
